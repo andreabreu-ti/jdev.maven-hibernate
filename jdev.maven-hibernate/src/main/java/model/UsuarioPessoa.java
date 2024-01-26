@@ -1,12 +1,22 @@
 package model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
-//@Tuplizer(impl = org.hibernate.tuple.entity.PojoEntityTuplizer.class)
+
+@NamedQueries({
+
+		@NamedQuery(name = "UsuarioPessoa.todos", query = "select u from UsuarioPessoa u"),
+		@NamedQuery(name = "UsuarioPessoa.buscaPorNome", query = "select u from UsuarioPessoa u where u.nome = :nome") })
 public class UsuarioPessoa {
 
 	@Id
@@ -19,6 +29,17 @@ public class UsuarioPessoa {
 	private String login;
 	private String senha;
 	private int idade;
+
+	@OneToMany(mappedBy = "usuarioPessoa", fetch = FetchType.EAGER) // Um usuário tem muitos telefones
+	private List<TelefoneUser> telefoneUsers;
+
+	public List<TelefoneUser> getTelefoneUsers() {
+		return telefoneUsers;
+	}
+
+	public void setTelefoneUsers(List<TelefoneUser> telefoneUsers) {
+		this.telefoneUsers = telefoneUsers;
+	}
 
 	public int getIdade() {
 		return idade;

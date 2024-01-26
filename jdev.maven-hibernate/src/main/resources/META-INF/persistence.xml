@@ -9,6 +9,7 @@
 	<persistence-unit name="jdev-maven-hibernate">
 	
 		<class>model.UsuarioPessoa</class>
+		<class>model.TelefoneUser</class>
 	
 		<properties>
 			
